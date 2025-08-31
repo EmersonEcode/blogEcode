@@ -1,0 +1,67 @@
+/* src/app/features/blog/pages/home/home.component.scss */
+@import '../../../../../styles.scss';;
+
+.home-container {
+  // Define uma largura máxima para o conteúdo, para não esticar demais em telas grandes
+  max-width: 1200px;
+  // Truque clássico para centralizar um container de largura fixa
+  margin: 0 auto;
+  // Adiciona um respiro nas laterais e em cima/baixo
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  // A cor virá do nosso styles.scss global
+}
+
+.post-grid {
+  display: grid;
+  // Este é o segredo para um grid responsivo:
+  // Ele cria o máximo de colunas que couberem com no mínimo 350px,
+  // e distribui o espaço restante igualmente (1fr).
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  // Espaçamento entre os cards
+  gap: 2rem;
+}
+
+.tag-filters {
+  display: flex;
+  flex-wrap: wrap; // Permite que os botões quebrem para a próxima linha
+  gap: 0.75rem; // Espaçamento entre os botões
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #ddd;
+
+  button {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: $cor-texto;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: #f0f0f0;
+      border-color: #aaa;
+    }
+
+    // Estilo do botão quando ele está ATIVO
+    &.active-tag {
+      background-color: $cor-secundaria;
+      color: #fff;
+      border-color: $cor-secundaria;
+    }
+  }
+}
+
+.no-results {
+  text-align: center;
+  font-style: italic;
+  color: #7f8c8d;
+  padding: 2rem;
+}

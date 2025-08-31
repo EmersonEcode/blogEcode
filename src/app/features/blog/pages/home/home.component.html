@@ -1,0 +1,33 @@
+<section class="home-container">
+  <h1>Últimas Publicações</h1>
+
+  <div class="tag-filters">
+    <button
+      (click)="clearFilter()"
+      [class.active-tag]="selectedTag === null">
+      Mostrar Todos
+    </button>
+    @for (tag of allTags; track tag) {
+      <button
+        (click)="filterByTag(tag)"
+        [class.active-tag]="selectedTag === tag">
+        {{ tag }}
+      </button>
+    }
+  </div>
+
+  <div class="post-grid">
+    @if (!isLoading) {
+      @for (post of filteredPosts; track post.id) {
+        <app-post-card [post]="post"></app-post-card>
+      }
+    } @else {
+      @for (item of skeletonItems; track $index) {
+        <app-post-card-skeleton></app-post-card-skeleton>
+      }
+    }
+  </div>
+  @if (!isLoading && filteredPosts.length === 0) {
+    <p class="no-results">Nenhuma publicação encontrada para a tag "{{ selectedTag }}".</p>
+  }
+</section>

@@ -1,0 +1,17 @@
+/* src/app/app.component.scss */
+
+// :host se refere ao próprio componente <app-root>
+:host {
+  // 1. O container vira uma coluna flex
+  display: flex;
+  flex-direction: column;
+
+  // 2. A altura mínima será 100% da altura da janela (Viewport Height)
+  min-height: 100vh;
+}
+
+.main-content {
+  // 3. O truque mágico! Esta linha ordena que a área de conteúdo
+  //    cresça e ocupe todo o espaço vertical disponível.
+  flex: 1;
+}
