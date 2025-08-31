@@ -1,0 +1,37 @@
+@import '../../../../styles.scss';
+
+.btn {
+  // Estilo base para TODOS os botões
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary {
+  // Estilo para o botão primário (o principal)
+  background-color: $cor-secundaria;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($cor-secundaria, 10%);
+    transform: translateY(-2px);
+  }
+}
+
+.btn-secondary {
+  // Estilo para um botão alternativo
+  background-color: transparent;
+  color: $cor-texto;
+  border: 2px solid #ccc;
+
+  &:hover {
+    background-color: #f0f0f0;
+    border-color: #aaa;
+  }
+}

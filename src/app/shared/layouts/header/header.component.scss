@@ -1,0 +1,47 @@
+@import '../../../../styles.scss'; // Permite usar nossas variáveis de cor
+
+:host {
+  display: block;
+  background-color: #fff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  position: sticky; // Opcional: faz o header ficar fixo no topo ao rolar a página
+  top: 0;
+  z-index: 1000;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between; // Joga o logo para um lado e a navegação para o outro
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo a {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: $cor-primaria;
+  text-decoration: none;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem; // Espaçamento entre os links
+}
+
+.main-nav a {
+  font-size: 1rem;
+  font-weight: bold;
+  color: $cor-texto;
+  text-decoration: none;
+  padding-bottom: 0.25rem;
+  transition: border-color 0.3s ease;
+
+  // A classe que o Angular adiciona automaticamente
+  &.active-link {
+    color: $cor-secundaria;
+    border-bottom: 2px solid $cor-secundaria;
+  }
+}

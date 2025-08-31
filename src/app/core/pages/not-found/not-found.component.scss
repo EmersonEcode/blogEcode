@@ -1,0 +1,36 @@
+@import '../../../../styles.scss';
+
+:host {
+  // Faz o componente ocupar todo o espaço disponível no container principal
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.not-found-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 8rem;
+  font-weight: bold;
+  color: $cor-primaria;
+  margin: 0;
+  line-height: 1;
+}
+
+h2 {
+  font-size: 2rem;
+  color: $cor-texto;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+app-button {
+  font-size: 1rem;
+}

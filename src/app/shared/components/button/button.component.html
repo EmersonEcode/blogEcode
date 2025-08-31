@@ -1,0 +1,10 @@
+<button
+  type="button"
+  [ngClass]="{
+    'btn': true,
+    'btn-primary': styleType === 'primary',
+    'btn-secondary': styleType === 'secondary'
+  }"
+  (click)="onClick()">
+  {{ text }}
+</button>

@@ -1,0 +1,145 @@
+/* src/app/features/blog/pages/post-detail/post-detail.component.scss */
+@import '../../../../../styles.scss';
+
+/* 1. O Container Principal do Post */
+.post-container {
+  // Usamos uma largura máxima um pouco menor que a da home,
+  // pois textos muito longos ficam difíceis de ler.
+  max-width: 800px;
+  margin: 2rem auto; // Centraliza e dá um respiro em cima/baixo
+  padding: 2rem 3rem; // Espaçamento interno generoso
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* 2. Estilo da Tipografia (Títulos e Metadados) */
+.post-title {
+  font-size: 2.8rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: $cor-primaria;
+}
+
+.post-meta {
+  color: #7f8c8d; // Um cinza suave
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid $cor-fundo; // Linha separadora sutil
+}
+
+/* 3. Estilo das Tags */
+.post-tags {
+  margin-bottom: 2.5rem;
+
+  .tag {
+    display: inline-block;
+    background-color: lighten($cor-secundaria, 30%);
+    color: darken($cor-secundaria, 10%);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.mat-icon {
+    font-size: 1.1rem;
+    vertical-align: middle;
+    color: $cor-primaria;
+}  
+
+/* 4. Estilo do Conteúdo do Post (Gerado pelo Markdown) */
+.post-content {
+  // Melhora a legibilidade do texto principal
+  font-size: 1.1rem;
+  line-height: 1.7;
+
+  // Estiliza os subtítulos que o Markdown gera (### Exemplo)
+  h3 {
+    font-size: 1.8rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  // Estiliza os parágrafos
+  p {
+    margin-bottom: 1rem;
+  }
+
+  // Estiliza o container do bloco de código
+  // As cores do texto vêm do tema do Prism.js (okaidia)
+  // que configuramos no angular.json
+  pre {
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    // O ngx-markdown já adiciona o padding e a cor de fundo
+    // do tema do Prism, então não precisamos mexer muito aqui.
+  }
+}
+
+
+/* src/app/features/blog/pages/post-detail/post-detail.component.scss */
+
+// ... (mantenha todos os outros estilos que já fizemos para .post-container, etc.) ...
+
+// Estilo para a mensagem de carregamento ou "não encontrado"
+.loading-message {
+  // Centraliza o texto
+  text-align: center;
+  // Dá um bom espaço vertical e horizontal
+  padding: 4rem 2rem;
+  font-size: 1.2rem;
+  // Um cinza mais suave para indicar que não é o conteúdo principal
+  color: #141a1a;
+  font-style: italic;
+
+  // Aplica a animação de pulsação que definiremos abaixo
+  // 'pulse' é o nome da animação, 2s é a duração, 'infinite' para repetir sempre,
+  // e 'ease-in-out' para suavizar o movimento.
+  animation: pulse 2s infinite ease-in-out;
+}
+
+// Aqui definimos a animação 'pulse'
+@keyframes pulse {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+
+
+:host ::ng-deep {
+  // Ajustes no botão de copiar da biblioteca Prism
+  div.code-toolbar > .toolbar > .toolbar-item > button {
+    background-color: #3e5062;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    box-shadow: none;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #516a82;
+    }
+  }
+
+  // Ajustes na cor da numeração de linha para combinar com o tema
+  .line-numbers-rows > span:before {
+    color: #6a7f95 !important;
+  }
+}

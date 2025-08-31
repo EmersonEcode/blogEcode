@@ -1,0 +1,18 @@
+@if(post){
+     <a [routerLink]="['/blog', post.slug]" class="card-link">
+         <article class="card">
+            <div class="card-content">
+                <h2 class="card-title">{{ post.title }}</h2>
+                <p class="card-summary">{{ post.summary }}</p>
+                <p><mat-icon>person</mat-icon> <strong>Author:</strong> {{ post.author }}</p>
+                <p><mat-icon>event</mat-icon><strong>Published on:</strong> {{ post.publishedDate | date:  'dd/MM/yyyy' }}</p>
+                <div class="tags">
+                    @for(tag of post.tags; track tag) {
+                        <span class="tag">{{ tag }}</span>
+                    }
+                </div>
+            </div>
+    </article>
+    </a>
+   
+}

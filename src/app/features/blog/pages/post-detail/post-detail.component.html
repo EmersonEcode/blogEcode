@@ -1,0 +1,33 @@
+@if (post && !isLoading) {
+  <div class="post-container">
+    <h1 class="post-title">{{ post.title }}</h1>
+    <p class="post-meta">
+      Publicado em {{ post.publishedDate | date: 'longDate' }} <mat-icon>event</mat-icon>por {{ post.author }} <mat-icon>person</mat-icon>
+    </p>
+    <div class="post-tags">
+      @for(tag of post.tags; track tag) {
+        <span class="tag">{{ tag }}</span>
+      }
+    </div>
+
+    <div class="post-content">
+      <markdown 
+        [data]="post.content"
+        [lineNumbers]="true"
+        
+      ></markdown>
+    </div>
+
+     <div class="post-container">
+    <app-share-buttons
+      [shareUrl]="shareUrl"
+      [shareText]="shareText">
+    </app-share-buttons>
+
+  </div>
+  </div>
+} @else {
+<div class="post-container">
+    <app-skeleton-loader></app-skeleton-loader>
+  </div>
+}

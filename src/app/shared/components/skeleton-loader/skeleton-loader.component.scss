@@ -1,0 +1,33 @@
+:host {
+  display: block; // Faz o componente ocupar espaço
+}
+
+.skeleton-box {
+  background-color: #e0e0e0; // Um cinza claro
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden; // Essencial para a animação de brilho
+  margin-bottom: 1rem;
+
+  // Animação de brilho
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 1.5s infinite linear;
+  }
+}
+
+// A animação que move o brilho
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

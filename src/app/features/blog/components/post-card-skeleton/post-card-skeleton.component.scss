@@ -1,0 +1,56 @@
+/* Estilos para o container do esqueleto, imitando o card real */
+.card-skeleton {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  height: 100%;
+}
+
+/* O esqueleto em si e a animação de brilho (a mesma que já usamos) */
+.skeleton-box {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 1.5s infinite linear;
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Tamanhos específicos para imitar o layout do card */
+.title-skeleton {
+  height: 30px;
+  width: 80%;
+  margin-bottom: 1.5rem;
+}
+
+.summary-skeleton {
+  height: 16px;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.summary-skeleton.short {
+  width: 70%;
+}
+
+.footer-skeleton {
+  height: 14px;
+  width: 40%;
+  margin-top: 1.5rem;
+}

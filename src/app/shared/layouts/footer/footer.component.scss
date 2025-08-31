@@ -1,0 +1,13 @@
+@import '../../.././../styles.scss'; // Permite usar nossas variáveis de cor
+
+:host {
+  display: block; // Comportamento de bloco padrão
+}
+
+.main-footer {
+  background-color: $cor-primaria; // Usando a variável do styles.scss
+  color: #ecf0f1; // Um cinza claro para o texto
+  padding: 2.5rem 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
