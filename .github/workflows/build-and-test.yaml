@@ -4,7 +4,7 @@ name: Angular CI/CD to Vercel
 # Gatilho: roda em pushes para a branch "main"
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 # Tarefas (Jobs)
 jobs:
