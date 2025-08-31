@@ -1,45 +1,51 @@
-# Nome do workflow que aparecerá na aba "Actions" do GitHub
-name: Angular Build and Test CI
+# Nome do workflow
+name: Angular CI/CD to Vercel
 
-# Gatilho (Trigger): Define QUANDO este workflow deve rodar.
+# Gatilho: roda em pushes para a branch "main"
 on:
-  # Roda sempre que houver um push na branch "main"
   push:
-    branches: [ "master" ]
-  # Roda também em Pull Requests que mirem a branch "main"
-  pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
-# Tarefas (Jobs): Define o que o workflow vai FAZER.
+# Tarefas (Jobs)
 jobs:
-  # Nomeamos nossa primeira (e única) tarefa como "build_and_test"
+  # Job 1: Build e Teste (exatamente como antes)
   build_and_test:
-    # Máquina virtual que será usada. A mais recente do Ubuntu é uma ótima escolha.
     runs-on: ubuntu-latest
-
-    # Passos (Steps): A sequência de comandos que a tarefa vai executar.
     steps:
-      # Passo 1: Pega o código do seu repositório para dentro da máquina virtual.
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # Passo 2: Configura a versão do Node.js que queremos usar.
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Usar uma versão LTS (Long Term Support) recente
-          cache: 'npm'       # Configura o cache do npm para acelerar a instalação em futuras execuções
-
-      # Passo 3: Instala as dependências do projeto.
+          node-version: '20'
+          cache: 'npm'
       - name: Install dependencies
         run: npm install
-
-      # Passo 4: Roda os testes unitários que criamos.
-      # --watch=false faz o teste rodar uma vez e sair (essencial para automação).
-      # --browsers=ChromeHeadless roda o teste em um navegador sem interface gráfica.
       - name: Run unit tests
         run: ng test --watch=false --browsers=ChromeHeadless
-
-      # Passo 5: Constrói o projeto para produção para garantir que não há erros de compilação.
       - name: Build project
         run: ng build
+
+  # Job 2: Deploy para a Vercel
+  deploy_to_vercel:
+    # Esta linha é crucial: este job SÓ roda se o job 'build_and_test' for bem-sucedido
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # Passo extra: instala a ferramenta de linha de comando da Vercel
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      
+      # Passo final: Faz o deploy para produção, usando os segredos que configuramos no GitHub
+      - name: Deploy Project to Vercel
+        # O comando 'vercel --prod' faz o deploy para o link de produção
+        # O token é passado de forma segura
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+        # As variáveis de ambiente garantem que o deploy seja para o projeto certo
+        env:
+          VERCEL_ORG_ID: ${{ secrets.TOKEN_VERCEL_USER }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
