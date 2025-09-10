@@ -1,0 +1,41 @@
+<div class="editor-container">
+  <h1>{{ isEditMode ? 'Editar Post' : 'Criar Novo Post' }}</h1>
+
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Título</label>
+      <input id="title" type="text" formControlName="title">
+    </div>
+
+    <div class="form-group">
+      <label for="summary">Resumo</label>
+      <textarea id="summary" rows="3" formControlName="summary"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="content">Conteúdo (Markdown)</label>
+      <textarea id="content" rows="15" formControlName="content"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="bannerImageUrl">URL do Banner</label>
+      <input id="bannerImageUrl" type="text" formControlName="bannerImageUrl">
+    </div>
+
+    <div class="form-group">
+      <label for="tags">Tags (separadas por vírgula)</label>
+      <input id="tags" type="text" formControlName="tags">
+    </div>
+
+    <div class="form-group-checkbox">
+      <input id="isFeatured" type="checkbox" formControlName="isFeatured">
+      <label for="isFeatured">Marcar como Destaque</label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="postForm.invalid">
+        {{ isEditMode ? 'Salvar Alterações' : 'Publicar Post' }}
+      </button>
+    </div>
+  </form>
+</div>

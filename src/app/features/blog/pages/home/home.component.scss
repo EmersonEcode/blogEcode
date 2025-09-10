@@ -10,6 +10,10 @@
   padding: 2rem;
 }
 
+.latest-posts{
+  margin-top: 3rem;
+}
+
 h1 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
@@ -52,7 +56,7 @@ h1 {
 
     // Estilo do botão quando ele está ATIVO
     &.active-tag {
-      background-color: $cor-secundaria;
+      background-color: var(--nav-link-hover);
       color: #fff;
       border-color: $cor-secundaria;
     }

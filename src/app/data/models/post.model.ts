@@ -7,5 +7,6 @@ export interface Post {
     author: string;
     publishedDate: Date;
     tags: string[];
-    content?: string
+    content?: string,
+    bannerImageUrl?: string;
 }

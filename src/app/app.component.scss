@@ -11,7 +11,15 @@
 }
 
 .main-content {
-  // 3. O truque mágico! Esta linha ordena que a área de conteúdo
-  //    cresça e ocupe todo o espaço vertical disponível.
+
+  flex: 1;
+   position: relative;
+
+   display: flex;
+  flex-direction: column;
+
+}
+
+.main-content > div{
   flex: 1;
 }

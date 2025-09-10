@@ -1,14 +1,23 @@
 @import '../../../../styles.scss'; // Permite usar nossas variáveis de cor
 
+
 :host {
   display: block;
-  background-color: #fff;
   padding: 1rem 2rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   position: sticky; // Opcional: faz o header ficar fixo no topo ao rolar a página
   top: 0;
   z-index: 1000;
+  background-color: var(--header-bg); // Usar variável
+  box-shadow: var(--box-shadow);
+  color: var(--text-color);
+  // NOVO: Adicione o efeito de vidro fosco (Glassmorphism)
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); // Para compatibilidade com Safari
+  transition: background-color 0.3s ease, color 0.3s ease, backdrop-filter 0.3s ease;
 }
+
+
 
 .main-header {
   display: flex;
@@ -21,8 +30,12 @@
 .logo a {
   font-size: 1.8rem;
   font-weight: bold;
-  color: $cor-primaria;
+  color: var(--text-color);
   text-decoration: none;
+  img{
+    width: 140px;
+    height: 40px;
+  }
 }
 
 .main-nav ul {
@@ -34,7 +47,7 @@
 .main-nav a {
   font-size: 1rem;
   font-weight: bold;
-  color: $cor-texto;
+  color: var(--text-color);
   text-decoration: none;
   padding-bottom: 0.25rem;
   transition: border-color 0.3s ease;
@@ -43,5 +56,32 @@
   &.active-link {
     color: $cor-secundaria;
     border-bottom: 2px solid $cor-secundaria;
+  }
+}
+
+
+.nav-and-theme {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.theme-toggle {
+  background: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border: 1px solid var(--card-border); // Usar variável
+  color: var(--text-color); // Usar variável
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+    transform: rotate(15deg);
   }
 }

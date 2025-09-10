@@ -1,6 +1,6 @@
 <app-progress-bar [progress]="scrollProgress"></app-progress-bar>
 <app-header></app-header>
-<main class="main-content">
+<main class="main-content" [@routeAnimations]="getRouteAnimationData()">
   <router-outlet></router-outlet>
 </main>
 <app-footer></app-footer>

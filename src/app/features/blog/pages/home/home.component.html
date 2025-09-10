@@ -1,4 +1,12 @@
 <section class="home-container">
+  @if(isLoading) {
+    <app-feature-carousel-skeleton></app-feature-carousel-skeleton>
+  } @else { 
+  <app-featured-carousel  class="reveal-on-scroll"
+        appRevealOnScroll></app-featured-carousel>
+  }
+  <section class="latest-posts" >
+
   <h1>Últimas Publicações</h1>
 
   <div class="tag-filters">
@@ -19,7 +27,8 @@
   <div class="post-grid">
     @if (!isLoading) {
       @for (post of filteredPosts; track post.id) {
-        <app-post-card [post]="post"></app-post-card>
+        <app-post-card [post]="post"  class="reveal-on-scroll"
+        appRevealOnScroll></app-post-card>
       }
     } @else {
       @for (item of skeletonItems; track $index) {
@@ -30,4 +39,5 @@
   @if (!isLoading && filteredPosts.length === 0) {
     <p class="no-results">Nenhuma publicação encontrada para a tag "{{ selectedTag }}".</p>
   }
+  </section>
 </section>
