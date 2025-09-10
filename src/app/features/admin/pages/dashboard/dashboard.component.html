@@ -1,0 +1,25 @@
+<div class="dashboard-header">
+  <h1>Dashboard de Posts</h1>
+  <app-button class="btn-create" text="Criar Novo Post"></app-button>
+</div>
+<div class="table-container">
+  <table>
+    <tbody>
+      <tr *ngFor="let post of allPosts">
+        <td>{{ post.title }}</td>
+        <td>{{ post.publishedDate | date: 'dd/MM/yyyy' }}</td>
+        <td>
+          <span class="status-published">Publicado</span>
+        </td>
+        <td class="actions">
+          <button (click)="editPost(post.slug)" class="btn-edit">Editar</button>
+          <button (click)="deletePost(post.slug, post.title)" class="btn-delete">Deletar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!allPosts.length" class="no-posts">
+    <p>Nenhum post encontrado. Que tal criar o primeiro?</p>
+  </div>
+</div>

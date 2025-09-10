@@ -5,11 +5,14 @@ import { PostService } from '../../services/post.service';
 import { Observable } from 'rxjs';
 import { PostCardSkeletonComponent } from "../../components/post-card-skeleton/post-card-skeleton.component";
 import { CommonModule } from '@angular/common';
+import { FeaturedCarouselComponent } from '../../components/featured-carousel/featured-carousel.component';
+import { FeatureCarouselSkeletonComponent } from "../../components/feature-carousel-skeleton/feature-carousel-skeleton.component";
+import { RevealOnScrollDirective } from '../../../../shared/directives/reveal-on-scroll.directive';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PostCardComponent, PostCardSkeletonComponent, CommonModule],
+  imports: [PostCardComponent, PostCardSkeletonComponent, CommonModule, FeaturedCarouselComponent, FeatureCarouselSkeletonComponent, RevealOnScrollDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

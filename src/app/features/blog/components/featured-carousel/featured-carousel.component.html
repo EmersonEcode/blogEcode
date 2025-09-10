@@ -1,0 +1,19 @@
+@if (featuredPosts$ | async; as posts) {
+  @if (posts.length > 0) {
+    <div class="carousel-wrapper">
+      <swiper-container #swiperContainer>
+        @for (post of posts; track post.id) {
+          <swiper-slide>
+            <a [routerLink]="['/blog', post.slug]" class="slide-link">
+              <img [src]="post.bannerImageUrl" [alt]="post.title" class="slide-image" />
+              <div class="slide-content">
+                <span class="slide-tag">{{ post.tags[0] }}</span>
+                <h2 class="slide-title">{{ post.title }}</h2>
+              </div>
+            </a>
+          </swiper-slide>
+        }
+      </swiper-container>
+    </div>
+  }
+}

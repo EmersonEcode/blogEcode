@@ -1,0 +1,66 @@
+@import '../../../../../styles.scss';
+
+@import 'swiper/scss';
+@import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination';
+.carousel-wrapper {
+  margin-bottom: 3rem;
+
+  swiper-container {
+    width: 100%;
+    height: 400px; // Altura do seu banner
+    border-radius: 8px;
+
+    --swiper-navigation-color: #fff;
+    --swiper-pagination-color: #fff;
+  }
+
+  swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    .slide-link {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .slide-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      color: #fff;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .slide-tag {
+      background-color: $cor-secundaria;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .slide-title {
+      font-size: 2rem;
+      margin-top: 0.5rem;
+    }
+
+    &:hover .slide-image {
+      transform: scale(1.05);
+    }
+  }
+}

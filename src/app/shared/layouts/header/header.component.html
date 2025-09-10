@@ -1,8 +1,9 @@
 <header class="main-header">
   <div class="logo">
-    <a routerLink="/">Ecode</a>
+    <a routerLink="/"><img src="assets/logo.png" width="140" height="50"  alt="<E/code>"></a>
   </div>
-  <nav class="main-nav">
+  <div class="nav-and-theme">
+<nav class="main-nav">
     <ul>
       <li>
         <a [routerLink]="['/blog']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Blog</a>
@@ -11,5 +12,11 @@
         <a [routerLink]="['/sobre']" routerLinkActive="active-link">Sobre</a>
       </li>
     </ul>
+    
   </nav>
+    <button (click)="themeService.toggleTheme()" class="theme-toggle" aria-label="Alternar tema">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+  
 </header>

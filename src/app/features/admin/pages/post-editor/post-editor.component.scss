@@ -1,0 +1,12 @@
+.form-group { margin-bottom: 1.5rem; }
+label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+input[type="text"], textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+.form-group-checkbox { display: flex; align-items: center; gap: 0.5rem; }
+button { padding: 0.75rem 1.5rem; /* ... adicione seu estilo de botão ... */ cursor: pointer; }
+button:disabled { background-color: #ccc; cursor: not-allowed; }

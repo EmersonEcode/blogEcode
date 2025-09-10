@@ -1,5 +1,8 @@
 @if (post && !isLoading) {
   <div class="post-container">
+     @if (post.bannerImageUrl) {
+      <img [src]="post.bannerImageUrl" [alt]="post.title" class="post-banner" >
+    }
     <h1 class="post-title">{{ post.title }}</h1>
     <p class="post-meta">
       Publicado em {{ post.publishedDate | date: 'longDate' }} <mat-icon>event</mat-icon>por {{ post.author }} <mat-icon>person</mat-icon>

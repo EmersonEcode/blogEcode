@@ -5,27 +5,53 @@
 }
 
 .card {
-    background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
     height: 100%;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s, box-shadow 0.3s ease;
-
-
+    padding: 0;
+    background-color: var(--card-background); // Usar variável
+    border: 1px solid var(--card-border);     // Usar variável
+    box-shadow: var(--box-shadow);           // Usar variável
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    // NOVO: Adicione o efeito de vidro fosco
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
     &:hover {
         transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--box-shadow);
     }
+     overflow: hidden;
+}
+.card-content{
+    padding: 1.5rem;
+    color: var(--text-color);
+}
+
+.card-banner {
+    width: 100%;
+    height: 200px; // Altura fixa para o banner no card
+    object-fit: cover; // Garante que a imagem cubra a área sem distorcer
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transform-origin: center;
+ 
+    &:hover {
+        transform: scale(1.05);
+       
+    }
+   
 }
 
 .card-title {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
-    color: #2c3e50;
-}
+color: var(--text-color);}
 
 .card-summary {
     font-size: 1rem;
@@ -44,9 +70,13 @@
 .mat-icon {
     vertical-align: middle;
     margin-right: 0.3rem;
-    color: $cor-primaria;
+    color: var(--text-color);
     font-size: 1.2rem;
 }   
+
+p{
+    font-size: 12px;
+}
 
 .card-link{
     text-decoration: none;
@@ -60,9 +90,9 @@
 
   .tag {
     display: inline-block;
-    background-color: lighten($cor-secundaria, 30%);
-    color: darken($cor-secundaria, 10%);
-    padding: 0.3rem 0.8rem;
+    background-color: var(--nav-link-hover); // Uma cor neutra para tags
+    color: var(--text-color-tags);
+    padding: 0.2rem 0.6rem;
     border-radius: 15px;
     font-size: 0.8rem;
     font-weight: bold;

@@ -2,10 +2,51 @@
 @import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 @import 'prismjs/plugins/toolbar/prism-toolbar.css';
 
-$cor-primaria: #2c3e50;
-$cor-secundaria: #3498db;
+$cor-primaria: #540404;
+$cor-secundaria: #5c1414;
 $cor-fundo: #ecf0f1;
-$cor-texto: #34495e;
+$cor-texto: #220101;
+$cor-texto-tags: #ecf0f1;
+
+:root {
+  /* Modo Claro (cores principais preservadas) */
+  --background-color: #ecf0f1;        /* fundo claro */
+  --text-color: #220101;              /* texto principal */
+  --primary-color: #540404;           /* cor do logo */
+  --secondary-color: #5c1414;         /* cor secundária do site */
+  --card-background: #ffffff;         
+  --card-border: #e0e0e0;             
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --header-bg: #ffffff;               
+  --footer-bg: #5c1414;               
+  --footer-text: #ecf0f1;            
+  --nav-link-hover: #540404;  
+  --text-color-tags: #ecf0f1;        
+}
+
+/* Modo Escuro Cyberpunk mantendo cores principais */
+body.dark-mode {
+  --background-color: #121212;               /* fundo escuro neutro */
+  --text-color: #ffffff;                    /* texto claro */
+  --primary-color: #540404;                 /* cor do logo permanece */
+  --secondary-color: #5c1414;               /* cor secundária permanece */
+  --card-background: rgba(101, 97, 97, 0.574); /* cards semi-transparente estilo glass */
+  --card-border: rgba(84, 4, 4, 0.5);      /* borda com destaque sutil em vermelho */
+  --box-shadow: 0 4px 20px rgba(84, 4, 4, 0.5); /* glow sutil vermelho */
+  --header-bg: rgba(101, 97, 97, 0.574);      /* header escuro semi-transparente */
+  --footer-bg: rgba(101, 97, 97, 0.574);     /* footer escuro neutro */
+  --footer-text: #e0e0e0;                  
+  --nav-link-hover: rgba(84, 4, 4, 0.6);   /* hover com glow discreto */
+  --text-color-tags: #ecf0f1;              /* tags continuam legíveis */
+}
+
+
+// Agora usamos as variáveis em todo o CSS
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 *{
   margin: 0;
@@ -30,4 +71,26 @@ a {
   }
 }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0;
+  font-family: Roboto,"Helvetica Neue", sans-serif; 
+}
+
+
+/* Estilos para a animação de Reveal-on-Scroll */
+
+// O estado inicial dos elementos que terão a animação
+.reveal-on-scroll {
+  opacity: 0;
+  // Começa um pouco para baixo
+  transform: translateY(30px);
+  // A transição suave que define a duração e o tipo da animação
+  transition: opacity 0.8s ease-out, transform 0.6s ease-out;
+}
+
+// A classe que nossa diretiva adiciona quando o elemento se torna visível
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  // Volta para a posição original
+  transform: translateY(0);
+}

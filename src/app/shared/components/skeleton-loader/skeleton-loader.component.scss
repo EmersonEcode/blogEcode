@@ -2,6 +2,10 @@
   display: block; // Faz o componente ocupar espaço
 }
 
+.skeleton-banner {
+  margin-bottom: 2rem;
+}
+
 .skeleton-box {
   background-color: #e0e0e0; // Um cinza claro
   border-radius: 4px;
@@ -21,6 +25,8 @@
     animation: shimmer 1.5s infinite linear;
   }
 }
+
+
 
 // A animação que move o brilho
 @keyframes shimmer {
