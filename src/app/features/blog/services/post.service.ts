@@ -2,6 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Post } from "../../../data/models/post.model";
 import { delay, map, Observable, of } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../../environments/environment.prod";
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,7 @@ export class PostService {
 
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:3000/api'; // Substitua pela URL real da sua API
+  private apiUrl = environment.apiUrl;
   constructor() { }
   /**
    * Retorna um Observable com a lista de TODOS os posts.
