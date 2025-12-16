@@ -1,157 +1,442 @@
-/* src/app/features/blog/pages/post-detail/post-detail.component.scss */
 @import '../../../../../styles.scss';
 
-/* 1. O Container Principal do Post */
-.post-container {
-  // Usamos uma largura máxima um pouco menor que a da home,
-  // pois textos muito longos ficam difíceis de ler.
-  max-width: 900px;
-  margin: 2rem auto; // Centraliza e dá um respiro em cima/baixo
-  padding: 2rem 3rem; // Espaçamento interno generoso
-  border-radius: 8px;
-  background-color: var(--card-background);
-  border: 1px solid var(--card-border);
-  box-shadow: var(--box-shadow);
+// --- 1. LAYOUT GERAL (GRID) ---
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.blog-layout {
+  display: grid;
+  // Define as colunas: Conteúdo (aprox 70%) | Sidebar (aprox 30%)
+  grid-template-columns: 1fr 350px; 
+  gap: 4rem; // Espaço generoso entre as colunas
+  align-items: start; // Alinha tudo ao topo
+
+  // Responsividade: Em telas menores (tablets/celulares), vira uma coluna só
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+// --- 2. COLUNA PRINCIPAL (ESQUERDA) ---
+.main-content {
   color: var(--text-color);
+  min-width: 0; // Evita que o grid quebre com conteúdos largos (imagens/code blocks)
 }
 
-/* 2. Estilo da Tipografia (Títulos e Metadados) */
-.post-title {
-  font-size: 2.8rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-  color: var(--primary-color);  
-}
-
-.post-meta {
-  color: #6b6767; // Um cinza suave
+.breadcrumb {
   font-size: 0.9rem;
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  
+  a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.2s;
+    &:hover { color: var(--primary-color); }
+  }
+  
+  .separator { margin: 0 0.5rem; opacity: 0.5; }
+}
+
+.post-header {
   margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid $cor-fundo; // Linha separadora sutil
-}
-
-/* 3. Estilo das Tags */
-.post-tags {
-  margin-bottom: 2.5rem;
-
-  .tag {
-    display: inline-block;
-   background-color: var(--nav-link-hover); // Uma cor neutra para tags
-    color: var(--text-color-tags);
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-}
-
-.mat-icon {
-    font-size: 1.1rem;
-    vertical-align: middle;
-    color: var(--primary-color);
-}  
-
-/* 4. Estilo do Conteúdo do Post (Gerado pelo Markdown) */
-.post-content {
-  // Melhora a legibilidade do texto principal
-  font-size: 1.1rem;
-  line-height: 1.7;
-
-  // Estiliza os subtítulos que o Markdown gera (### Exemplo)
-  h3 {
-    font-size: 1.8rem;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #eee;
-  }
-
-  // Estiliza os parágrafos
-  p {
-    margin-bottom: 1rem;
-  }
-
-  // Estiliza o container do bloco de código
-  // As cores do texto vêm do tema do Prism.js (okaidia)
-  // que configuramos no angular.json
-  pre {
-    border-radius: 8px;
+  
+  .post-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.8rem; // Título grande e impactante
+    font-weight: 800;
+    line-height: 1.2;
     margin-bottom: 1.5rem;
-    // O ngx-markdown já adiciona o padding e a cor de fundo
-    // do tema do Prism, então não precisamos mexer muito aqui.
+    color: var(--text-color);
+    letter-spacing: -0.02em;
+
+    @media (max-width: 768px) { font-size: 2rem; }
   }
-}
 
+  .author-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--card-border);
 
-/* src/app/features/blog/pages/post-detail/post-detail.component.scss */
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--background-color); // Borda para separar do fundo
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 
-// ... (mantenha todos os outros estilos que já fizemos para .post-container, etc.) ...
-
-// Estilo para a mensagem de carregamento ou "não encontrado"
-.loading-message {
-  // Centraliza o texto
-  text-align: center;
-  // Dá um bom espaço vertical e horizontal
-  padding: 4rem 2rem;
-  font-size: 1.2rem;
-  // Um cinza mais suave para indicar que não é o conteúdo principal
-  color: #141a1a;
-  font-style: italic;
-
-  // Aplica a animação de pulsação que definiremos abaixo
-  // 'pulse' é o nome da animação, 2s é a duração, 'infinite' para repetir sempre,
-  // e 'ease-in-out' para suavizar o movimento.
-  animation: pulse 2s infinite ease-in-out;
-}
-
-// Aqui definimos a animação 'pulse'
-@keyframes pulse {
-  0% {
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.7;
-  }
-}
-
-
-
-:host ::ng-deep {
-  // Ajustes no botão de copiar da biblioteca Prism
-  div.code-toolbar > .toolbar > .toolbar-item > button {
-    background-color: #3e5062;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 0.5rem 0.8rem;
-    font-size: 0.8rem;
-    font-weight: bold;
-    box-shadow: none;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #516a82;
+    .meta-text {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.95rem;
+      
+      .author-name { 
+        font-weight: 700; 
+        color: var(--text-color);
+      }
+      .publish-date { 
+        font-size: 0.85rem;
+        color: var(--secondary-color); 
+      }
     }
   }
+}
 
-  // Ajustes na cor da numeração de linha para combinar com o tema
-  .line-numbers-rows > span:before {
-    color: #6a7f95 !important;
+.banner-wrapper {
+  width: 100%;
+  margin-bottom: 3rem;
+
+  .post-banner {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    border-radius: 16px; // Bordas arredondadas modernas
+    object-fit: cover;
+    box-shadow: var(--box-shadow);
   }
 }
 
+// Estilização do Conteúdo Markdown
+.markdown-body {
+  font-family: 'Inter', -apple-system, sans-serif; // Fonte limpa para leitura
+  font-size: 1.125rem; // 18px
+  line-height: 1.85;
+  color: var(--text-color);
 
-.post-banner {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  // Usamos ::ng-deep para estilizar o HTML gerado dinamicamente
+  ::ng-deep {
+    p { margin-bottom: 1.8rem; }
+    
+    h2, h3 { 
+      color: var(--text-color);
+      font-weight: 700; 
+      margin-top: 3rem; 
+      margin-bottom: 1.2rem;
+      line-height: 1.3;
+    }
+    h2 { font-size: 1.8rem; }
+    
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      &:hover { border-bottom-color: var(--primary-color); }
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 2rem 0;
+    }
+
+    blockquote {
+      border-left: 4px solid var(--primary-color);
+      padding-left: 1.5rem;
+      font-style: italic;
+      color: var(--secondary-color);
+      margin: 2rem 0;
+    }
+
+    // Blocos de código
+    pre {
+      border-radius: 8px;
+      margin: 2rem 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+  }
 }
 
+.share-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--card-border);
+
+  h3 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-color); }
+
+  .social-icons {
+    display: flex;
+    gap: 1rem;
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid var(--card-border);
+      color: var(--secondary-color);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
+
+// --- 3. COLUNA LATERAL (SIDEBAR) ---
+.sidebar {
+  position: sticky;
+  top: 2rem; // Faz a sidebar acompanhar o scroll da página
+  display: flex;
+  flex-direction: column;
+  gap: 3rem; // Espaço entre os widgets
+}
+
+.widget {
+  .widget-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    position: relative;
+    
+    // Pequeno detalhe decorativo abaixo do título (opcional)
+    // &::after {
+    //   content: '';
+    //   display: block;
+    //   width: 40px;
+    //   height: 3px;
+    //   background: var(--primary-color);
+    //   margin-top: 0.5rem;
+    //   border-radius: 2px;
+    // }
+  }
+}
+
+// Widget: Latest Posts
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .mini-post {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start; // Alinha ao topo caso o título seja longo
+
+    .mini-thumb {
+      width: 80px;
+      height: 65px;
+      border-radius: 10px; // Thumb arredondada
+      object-fit: cover;
+      flex-shrink: 0; // Garante que a imagem não encolha
+    }
+
+    .mini-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .mini-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-color);
+        text-decoration: none;
+        line-height: 1.4;
+        margin-bottom: 0.4rem;
+        transition: color 0.2s;
+        cursor: pointer;
+
+        &:hover { color: var(--primary-color); }
+      }
+
+      .mini-date {
+        font-size: 0.8rem;
+        color: var(--secondary-color);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Widget: Categories (Estilo Tags Cloud/Pills)
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+
+  .cat-pill {
+    background-color: var(--nav-link-hover); // Fundo sutil
+    color: var(--text-color-tags);
+    padding: 0.5rem 1rem;
+    border-radius: 25px; // Bem arredondado
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+
+    &:hover {
+      background-color: var(--primary-color);
+      color: white;
+      box-shadow: 0 4px 10px rgba(var(--primary-color-rgb), 0.2);
+    }
+  }
+}
+
+// Widget: Popular Tags (Lista Vertical)
+.tag-list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--card-border);
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:first-child { padding-top: 0; }
+    &:last-child { border-bottom: none; }
+    
+    &:hover { 
+      color: var(--primary-color); 
+      .hashtag { color: var(--primary-color); }
+    }
+
+    .hashtag { 
+      margin-right: 0.8rem; 
+      color: #ccc; // Hashtag cinza clara
+      font-weight: bold;
+    }
+  }
+}
+
+// Widget: Social Media
+.social-row {
+  display: flex;
+  gap: 1.2rem;
+  
+  i {
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--secondary-color);
+    transition: all 0.3s;
+
+    &:hover { transform: translateY(-3px); }
+
+    // Cores específicas no hover
+    &.fa-facebook:hover { color: #3b5998; }
+    &.fa-instagram:hover { color: #c13584; }
+    &.fa-twitter:hover { color: #1da1f2; }
+    &.fa-linkedin:hover { color: #0077b5; }
+  }
+}
+
+// Widget: CTA Card (O Destaque Roxo/Gradiente)
+.cta-card {
+  background: linear-gradient(135deg, #ea6683 0%, #a24b52 100%);
+  color: white;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(118, 75, 162, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  // Efeito decorativo (círculo sutil no fundo)
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+  }
+
+  .cta-label {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    padding: 0.4rem 1rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    font-weight: 800;
+  }
+
+  p {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    line-height: 1.6;
+  }
+
+  .cta-btn {
+    background: white;
+    color: #764ba2;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+
+    &:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+  }
+}
+
+// --- Loading State (Simples) ---
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  color: var(--secondary-color);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+
+
+.c-loader {
+  animation: is-rotating 1s infinite;
+  border: 6px solid #e7e2e2;
+  border-radius: 50%;
+  border-top-color: rgba(var(--primary-color-rgb), 0.2);
+  height: 50px;
+  width: 50px;
+}
+
+@keyframes is-rotating {
+  to {
+    transform: rotate(1.1turn);
+  }
+}

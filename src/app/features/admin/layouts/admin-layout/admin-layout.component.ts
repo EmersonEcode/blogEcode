@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -9,4 +10,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 export class AdminLayoutComponent {
 
+
+  constructor(private authService : AuthService){}
+
+  logout(): void {
+    this.authService.logout();
+  }
 }

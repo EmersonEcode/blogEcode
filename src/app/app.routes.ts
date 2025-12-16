@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { BLOG_ROUTES } from './features/blog/blog.routes';
 import { AboutPageComponent } from './features/about/pages/about-page/about-page.component';
 import { ADMIN_ROUTES } from './features/admin/admin-routing.routes';
+import { LoginComponent } from './features/admin/pages/login/login.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
 
@@ -21,7 +23,12 @@ export const routes: Routes = [
 
     {
         path: 'admin',
+        canActivate: [authGuard],
         children: ADMIN_ROUTES
+    },
+    {
+        path: 'login',
+        component: LoginComponent
     },
 
     {

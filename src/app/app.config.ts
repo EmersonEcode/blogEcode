@@ -9,8 +9,12 @@ import 'prismjs/components/prism-typescript';
 import 'prismjs/plugins/line-numbers/prism-line-numbers';
 import 'prismjs/plugins/toolbar/prism-toolbar';
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideMarkdown(), provideHttpClient(), provideAnimations()],
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideMarkdown(), provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor])
+    ), provideAnimations()],
 };
