@@ -1,66 +1,70 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {  ActivatedRoute, RouterModule } from '@angular/router';
-import { Title, Meta } from '@angular/platform-browser';
-import { Post } from '../../../../data/models/post.model';
-import { PostService } from '../../services/post.service';
-import { of, switchMap, tap } from 'rxjs';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router'; // Adicionei RouterModule para os links funcionarem
 import { MarkdownModule } from 'ngx-markdown';
-import { SkeletonLoaderComponent } from '../../../../shared/components/skeleton-loader/skeleton-loader.component';
-import { ShareButtonsComponent } from "../../../../shared/components/share-buttons/share-buttons.component";
- import { MatIconModule } from "@angular/material/icon";
+import { PostService } from '../../services/post.service';
+import { Post } from '../../../../data/models/post.model';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-post-detail',
   standalone: true,
-  // Apenas CommonModule e os componentes que estamos usando
-  imports: [CommonModule, MarkdownModule, SkeletonLoaderComponent, ShareButtonsComponent, MatIconModule, RouterModule],
+  imports: [CommonModule, MarkdownModule, RouterModule], // Importante: RouterModule para o routerLink funcionar
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.scss']
 })
 export class PostDetailComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private postService = inject(PostService);
-  private titleService = inject(Title);
-  private metaService = inject(Meta);
-
-  // MUDANÇA 1: Trocamos post$ por uma propriedade simples 'post'.
+  // Dados do Post Atual
   post: Post | undefined;
-  isLoading = true; // Adicionamos um controle de loading
+  isLoading = true;
+  
+  // Dados Reais para a Sidebar
+  recentPosts: Post[] = [];
+  allTags: string[] = [];
 
-  shareUrl: string = '';
-  shareText: string = '';
+  private route = inject(ActivatedRoute);
+  private router = inject(Router); // Para forçar recarregamento se clicar em link na mesma página
+  private postService = inject(PostService);
 
   ngOnInit(): void {
-    // MUDANÇA 2: Removemos o 'this.post$ =' do início.
-    this.route.paramMap.pipe(
-      switchMap(params => {
-        const slug = params.get('slug');
-        if (slug) {
-          return this.postService.getPostBySlug(slug);
-        }
-        return of(undefined);
-      }),
-      tap(postData => {
-        // A lógica de SEO continua aqui, funcionando perfeitamente
-        if (postData) {
-          this.titleService.setTitle(`${postData.title} | Ecode`);
-          this.metaService.removeTag("name='description'");
-          this.metaService.addTag({ name: 'description', content: postData.summary });
-        } else {
-          this.titleService.setTitle('Post Não Encontrado | Ecode');
-        }
-      })
-    ).subscribe(postData => {
-      // MUDANÇA 3: Dentro do subscribe, atribuímos os dados
-      this.post = postData;
-      this.isLoading = false; // Paramos o loading
-
-      // A lógica de compartilhamento agora funciona corretamente
-      if (this.post) {
-        this.shareUrl = window.location.href;
-        this.shareText = this.post.title;
+    // 1. Ouve mudanças na URL (para carregar novo post se clicar na sidebar)
+    this.route.paramMap.subscribe(params => {
+      const slug = params.get('slug');
+      if (slug) {
+        this.loadPost(slug);
       }
+    });
+
+    // 2. Carrega dados globais da sidebar (uma vez só)
+    this.loadSidebarData();
+  }
+
+  private loadPost(slug: string) {
+    this.isLoading = true;
+    this.postService.getPostBySlug(slug).subscribe({
+      next: (data) => {
+        this.post = data;
+        this.isLoading = false;
+        // Scroll para o topo quando mudar de post
+        window.scrollTo(0, 0);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar post:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private loadSidebarData() {
+    // Busca posts para o widget "Latest Posts"
+    this.postService.getPosts().subscribe(posts => {
+      // Pega os 3 primeiros posts (assumindo que a API já retorna ordenado por data)
+      this.recentPosts = posts.slice(0, 3);
+    });
+
+    // Busca tags para os widgets de "Categorias" e "Tags"
+    this.postService.getUniqueTags().subscribe(tags => {
+      this.allTags = tags;
     });
   }
 }

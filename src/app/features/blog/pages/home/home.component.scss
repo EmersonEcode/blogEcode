@@ -1,5 +1,5 @@
 /* src/app/features/blog/pages/home/home.component.scss */
-@import '../../../../../styles.scss';;
+@import '../../../../../styles.scss';
 
 .home-container {
   // Define uma largura máxima para o conteúdo, para não esticar demais em telas grandes
@@ -57,7 +57,7 @@ h1 {
     // Estilo do botão quando ele está ATIVO
     &.active-tag {
       background-color: var(--nav-link-hover);
-      color: #fff;
+      color: $cor-primaria;
       border-color: $cor-secundaria;
     }
   }

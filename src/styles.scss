@@ -1,96 +1,164 @@
+/* ============================================================
+   IMPORTS & DEPENDÊNCIAS
+   ============================================================ */
 @import 'prismjs/themes/prism-okaidia.css';
 @import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 @import 'prismjs/plugins/toolbar/prism-toolbar.css';
 
-$cor-primaria: #540404;
-$cor-secundaria: #5c1414;
-$cor-fundo: #ecf0f1;
-$cor-texto: #220101;
-$cor-texto-tags: #ecf0f1;
+/* ============================================================
+   VARIÁVEIS SASS (Base para pré-processamento)
+   ============================================================ */
+$cor-primaria: #740909; 
+$cor-secundaria: #64748b; 
+$cor-fundo: #f8f9fa;      
+$cor-texto: #2d3748;      
 
+/* ============================================================
+   VARIÁVEIS CSS (Temas Dinâmicos)
+   ============================================================ */
 :root {
-  /* Modo Claro (cores principais preservadas) */
-  --background-color: #ecf0f1;        /* fundo claro */
-  --text-color: #220101;              /* texto principal */
-  --primary-color: #540404;           /* cor do logo */
-  --secondary-color: #5c1414;         /* cor secundária do site */
-  --card-background: #ffffff;         
-  --card-border: #e0e0e0;             
-  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  --header-bg: #ffffff;               
-  --footer-bg: #5c1414;               
-  --footer-text: #ecf0f1;            
-  --nav-link-hover: #540404;  
-  --text-color-tags: #ecf0f1;        
+  /* --- MODO CLARO (Clean & Corporate) --- */
+  --background-color: #f8f9fa;
+  --text-color: #2d3748;
+  
+  --primary-color: #740909;
+  --primary-color-rgb: 116, 9, 9; /* Crucial para a transparência das tags */
+  
+  --secondary-color: #64748b; 
+  
+  --card-background: #ffffff;
+  --card-border: #e2e8f0;
+  
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --footer-bg: #1a0505;
+  --footer-text: #e2e8f0;
+  
+  --nav-link-hover: #f1f5f9;  
+  --tag-text-color: #ffffff; /* Cor do texto da tag APENAS no hover */     
 }
 
-/* Modo Escuro Cyberpunk mantendo cores principais */
 body.dark-mode {
-  --background-color: #121212;               /* fundo escuro neutro */
-  --text-color: #ffffff;                    /* texto claro */
-  --primary-color: #540404;                 /* cor do logo permanece */
-  --secondary-color: #5c1414;               /* cor secundária permanece */
-  --card-background: rgba(101, 97, 97, 0.574); /* cards semi-transparente estilo glass */
-  --card-border: rgba(84, 4, 4, 0.5);      /* borda com destaque sutil em vermelho */
-  --box-shadow: 0 4px 20px rgba(84, 4, 4, 0.5); /* glow sutil vermelho */
-  --header-bg: rgba(101, 97, 97, 0.574);      /* header escuro semi-transparente */
-  --footer-bg: rgba(101, 97, 97, 0.574);     /* footer escuro neutro */
-  --footer-text: #e0e0e0;                  
-  --nav-link-hover: rgba(84, 4, 4, 0.6);   /* hover com glow discreto */
-  --text-color-tags: #ecf0f1;              /* tags continuam legíveis */
+  /* --- MODO ESCURO (Premium High-Tech) --- */
+  --background-color: #0f1115;            
+  --text-color: #e2e8f0;                  
+  
+  --primary-color: #ef4444; 
+  --primary-color-rgb: 239, 68, 68;
+  
+  --secondary-color: #94a3b8;             
+  
+  --card-background: #1e2025; 
+  --card-border: #2d3748; 
+  
+  --box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.15); 
+  
+  --header-bg: rgba(30, 32, 37, 0.95);      
+  --footer-bg: #0a0a0a;     
+  --footer-text: #cbd5e1;                  
+  --nav-link-hover: rgba(239, 68, 68, 0.15); 
+  --tag-text-color: #ffffff;              
 }
 
-
-// Agora usamos as variáveis em todo o CSS
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-*{
+/* ============================================================
+   RESET & ESTRUTURA GLOBAL
+   ============================================================ */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
 }
 
 html, body {
-  font-family: 'Roboto', sans-serif;
-  background-color: $cor-fundo;
-  color: $cor-texto;
   height: 100%;
+  font-family: 'Roboto', 'Inter', -apple-system, sans-serif;
+  overflow-x: hidden;
 }
 
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   ELEMENTOS GLOBAIS
+   ============================================================ */
 a {
-  color: $cor-secundaria;
+  color: var(--primary-color);
   text-decoration: none;
-  transition: color 0.3s;
+  transition: opacity 0.2s ease;
+  font-weight: 500;
+
   &:hover {
-    color: darken($cor-secundaria, 10%);
+    opacity: 0.8; 
   }
 }
-html, body { height: 100%; }
-body { 
-  margin: 0;
-  font-family: Roboto,"Helvetica Neue", sans-serif; 
+
+/* Scrollbar Bonita */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
 }
 
-
-/* Estilos para a animação de Reveal-on-Scroll */
-
-// O estado inicial dos elementos que terão a animação
+/* ============================================================
+   ANIMAÇÕES & UTILITÁRIOS
+   ============================================================ */
 .reveal-on-scroll {
   opacity: 0;
-  // Começa um pouco para baixo
   transform: translateY(30px);
-  // A transição suave que define a duração e o tipo da animação
   transition: opacity 0.8s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
 }
 
-// A classe que nossa diretiva adiciona quando o elemento se torna visível
 .reveal-on-scroll.is-visible {
   opacity: 1;
-  // Volta para a posição original
   transform: translateY(0);
+}
+
+/* ============================================================
+   COMPONENTES UI GLOBAIS (TAGS & CATEGORIAS)
+   Aqui forçamos todas as tags do site a usar a cor primária
+   ============================================================ */
+
+/* Seletores comuns para tags em todo o sistema */
+.tag, .cat-pill, .badge, .post-tag {
+  display: inline-block;
+  
+  /* FUNDO: Usa a cor primária com 10% de opacidade (fica elegante) */
+  background-color: rgba(var(--primary-color-rgb), 0.1); 
+  
+  /* TEXTO: Usa a cor primária sólida */
+  color: var(--primary-color);
+  
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px; /* Formato Pílula */
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent; /* Previne pulo de layout no hover */
+
+  /* Estado Hover (Mouse em cima) */
+  &:hover {
+    /* Fica sólido na cor primária */
+    background-color: var(--primary-color);
+    /* Texto fica branco para contraste */
+    color: var(--tag-text-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3);
+  }
 }

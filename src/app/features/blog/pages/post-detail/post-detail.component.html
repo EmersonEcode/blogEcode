@@ -1,36 +1,102 @@
-@if (post && !isLoading) {
-  <div class="post-container">
-     @if (post.bannerImageUrl) {
-      <img [src]="post.bannerImageUrl" [alt]="post.title" class="post-banner" >
-    }
-    <h1 class="post-title">{{ post.title }}</h1>
-    <p class="post-meta">
-      Publicado em {{ post.publishedDate | date: 'longDate' }} <mat-icon>event</mat-icon>por {{ post.author }} <mat-icon>person</mat-icon>
-    </p>
-    <div class="post-tags">
-      @for(tag of post.tags; track tag) {
-        <span class="tag">{{ tag }}</span>
-      }
-    </div>
+<div class="page-container">
+  
+  <div class="blog-layout" *ngIf="post; else loading">
+    
+    <main class="main-content">
+      
+      <nav class="breadcrumb">
+        <a routerLink="/">Blog</a> <span class="separator">></span> {{ post.title }}
+      </nav>
 
-    <div class="post-content">
-      <markdown 
-        [data]="post.content"
-        [lineNumbers]="true"
+      <header class="post-header">
+        <h1 class="post-title">{{ post.title }}</h1>
         
-      ></markdown>
-    </div>
+        <div class="author-meta">
+          <img src="https://ui-avatars.com/api/?name={{post.author[1] + post.author}}&background=random" alt="Author" class="author-avatar">
+          <div class="meta-text">
+            <span class="author-name">{{post.author }}</span>
+            <span class="publish-date">• {{ post.publishedDate| date: 'd MMM y' }}</span>
+          </div>
+        </div>
+      </header>
 
-     <div class="post-container">
-    <app-share-buttons
-      [shareUrl]="shareUrl"
-      [shareText]="shareText">
-    </app-share-buttons>
+      <div class="banner-wrapper">
+        <img *ngIf="post.bannerImageUrl" [src]="post.bannerImageUrl" [alt]="post.title" class="post-banner">
+      </div>
+
+      <article class="markdown-body">
+        <markdown [data]="post.content"></markdown>
+      </article>
+
+      <div class="share-section">
+        <h3>Share this post</h3>
+        <div class="social-icons">
+          <a href="#" class="icon facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="icon twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="icon linkedin"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </main>
+
+
+    <aside class="sidebar">
+      
+      <div class="widget latest-posts" *ngIf="recentPosts.length > 0">
+        <h3 class="widget-title">Latest Posts</h3>
+        <div class="post-list">
+          
+          <div class="mini-post" *ngFor="let recent of recentPosts">
+            <img [src]="recent.bannerImageUrl || 'assets/placeholder.jpg'" [alt]="recent.title" class="mini-thumb">
+            
+            <div class="mini-info">
+              <a [routerLink]="['/posts', recent.slug]" class="mini-title">{{ recent.title }}</a>
+              <span class="mini-date">{{ recent.publishedDate| date: 'MMM d, y' }}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="widget categories" *ngIf="allTags.length > 0">
+        <h3 class="widget-title">Categories</h3>
+        <div class="tags-cloud">
+          <span class="cat-pill" *ngFor="let tag of allTags.slice(0, 6)">{{ tag }}</span>
+        </div>
+      </div>
+
+      <div class="widget popular-tags" *ngIf="allTags.length > 0">
+        <h3 class="widget-title">Popular Tags</h3>
+        <ul class="tag-list">
+          <li *ngFor="let tag of allTags">
+            <span class="hashtag">#</span> {{ tag }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="widget social-media">
+        <h3 class="widget-title">Social Media</h3>
+        <div class="social-row">
+          <i class="fab fa-facebook social-colored"></i>
+          <i class="fab fa-instagram social-colored"></i>
+          <i class="fab fa-twitter social-colored"></i>
+          <i class="fab fa-linkedin social-colored"></i>
+        </div>
+      </div>
+
+      <div class="widget cta-card">
+        <span class="cta-label">Ecode Premium</span>
+        <h2>Quer aprender a criar este blog?</h2>
+        <p>Confira a série completa de tutoriais sobre Angular e Node.js.</p>
+        <button class="cta-btn">Ler Tutoriais</button>
+      </div>
+
+    </aside>
 
   </div>
-  </div>
-} @else {
-<div class="post-container">
-    <app-skeleton-loader></app-skeleton-loader>
-  </div>
-}
+
+  <ng-template #loading>
+  <div class="loading-container"><div class="c-loader"></div></div>
+  </ng-template>
+
+</div>

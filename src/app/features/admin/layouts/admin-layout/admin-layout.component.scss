@@ -5,6 +5,7 @@
 .sidebar { width: 250px; background: $cor-primaria; color: #fff; padding: 1rem; }
 .sidebar-title { text-align: center; margin-bottom: 2rem; }
 .sidebar-nav ul { list-style: none; padding: 0; }
-.sidebar-nav a { color: #ecf0f1; text-decoration: none; display: block; padding: 0.75rem 1rem; border-radius: 5px; }
-.sidebar-nav a:hover { background-color: $cor-secundaria; }
+.sidebar-nav a, button{ color: #ecf0f1; text-decoration: none; display: block; padding: 0.75rem 1rem; border-radius: 5px; }
+.sidebar-nav button,     a:hover { background-color: $cor-secundaria; }
+
 .main-content { flex: 1; padding: 2rem; overflow-y: auto; }

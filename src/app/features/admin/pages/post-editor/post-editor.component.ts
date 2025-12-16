@@ -56,7 +56,7 @@ export class PostEditorComponent implements OnInit {
   onSubmit(): void {
     if (this.postForm.invalid) {
     // Marca todos os campos como "tocados" para exibir mensagens de erro, se houver
-    this.postForm.markAllAsTouched(); 
+    this.postForm.markAllAsTouched();
     return;
   }
 
@@ -69,10 +69,7 @@ export class PostEditorComponent implements OnInit {
   if (this.isEditMode && this.currentSlug) {
     // --- LÓGICA DE ATUALIZAÇÃO ---
     this.postService.updatePost(this.currentSlug, formData).subscribe({
-      next: () => {
-        // Sucesso! Navega de volta para o dashboard.
-        this.router.navigate(['/admin/dashboard']);
-      },
+      next: () => this.router.navigate(['/admin/dashboard']),
       error: (err) => console.error('Erro ao atualizar o post:', err)
     });
   } else {
@@ -80,8 +77,7 @@ export class PostEditorComponent implements OnInit {
     this.postService.createPost(formData).subscribe({
       next: () => {
         // Sucesso! Navega de volta para o dashboard.
-        this.router.navigate(['/admin/dashboard']);
-      },
+        this.router.navigate(['/admin/dashboard']);},
       error: (err) => console.error('Erro ao criar o post:', err)
     });
   }
